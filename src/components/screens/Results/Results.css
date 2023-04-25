@@ -1,0 +1,46 @@
+.results {
+  min-height: 100vh;
+  position: relative;
+  background: #ececec;
+  padding-bottom: 5em;
+  padding-top: 30px;
+}
+.winnersProfile {
+  display: flex;
+  align-items: center;
+}
+
+.cardHeader {
+  color: rgb(248, 245, 245);
+}
+
+.resultTitle {
+  font-weight: bold;
+  font-size: 30px;
+  background-color: white;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.dotActive {
+  height: 25px;
+  width: 25px;
+  background-color: #73de1a;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotInactive {
+  height: 25px;
+  width: 25px;
+  background-color: #b1babd;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legendData {
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1px;
+}

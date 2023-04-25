@@ -1,0 +1,23 @@
+.profileContainer {
+  min-height: 100vh;
+  position: relative;
+  background: #fafafa;
+  padding-bottom: 5em;
+  padding-top: 30px;
+}
+
+.containerHeader {
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  background: rgb(130, 224, 130);
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.containerContent {
+  background: rgb(244, 242, 245);
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+}

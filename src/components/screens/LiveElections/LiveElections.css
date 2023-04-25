@@ -1,0 +1,35 @@
+.live {
+  min-height: 100vh;
+  position: relative;
+  background: #ececec;
+  padding-bottom: 5em;
+  padding-top: 30px;
+}
+
+.cardHeader {
+  color: white;
+  padding-top: 15px !important;
+  padding-bottom: 10px !important;
+}
+
+.colorPicker {
+  background-color: aqua;
+}
+
+.livecount {
+  font-weight: bold;
+  font-size: 30px;
+  background-color: white;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.position {
+  font-weight: bold;
+}
+
+.footerDanger {
+  border: 1px solid red;
+  border-radius: 5px;
+}

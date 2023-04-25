@@ -1,0 +1,41 @@
+.view {
+  min-height: 100vh;
+  position: relative;
+  background: #ececec;
+  padding-bottom: 5em;
+  padding-top: 2em;
+}
+
+.componentTitle {
+  text-align: center;
+  padding-bottom: 2.5rem;
+  font-weight: bold;
+  font-size: 35px;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 3px;
+}
+
+.titleDiv {
+  background-color: white;
+  margin-top: -5px;
+  margin-bottom: 40px;
+  border-bottom: 2px solid lightgray;
+  border-top: 2px solid lightgray;
+}
+.cardTitle {
+  color: white;
+}
+
+.button {
+  width: 100%;
+}
+
+.cardBody {
+  background: #2f4050;
+  border-top: 3px solid green;
+}
+
+.nearDeadline {
+  color: #58ab53 !important;
+}

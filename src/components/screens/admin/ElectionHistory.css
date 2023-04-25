@@ -1,0 +1,37 @@
+.page-container {
+  position: relative;
+  min-height: 100vh;
+  background: #fafafa;
+  padding-bottom: 5em;
+  padding-top: 30px;
+}
+
+.footerFix {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 5em;
+  margin-top: 30px;
+}
+
+.electionHistory {
+  padding-bottom: 2.5rem;
+  font-weight: bold;
+  font-size: 30px;
+  background-color: rgb(165, 241, 165);
+  margin-bottom: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 30px;
+}
+
+.formlabel {
+  font-size: 20px;
+}
+
+.searchIcon {
+  color: rgb(7, 160, 231);
+  position: absolute;
+  top: 30%;
+  right: -70%;
+  z-index: 1000;
+}

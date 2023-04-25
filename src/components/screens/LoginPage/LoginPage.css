@@ -1,0 +1,61 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: #fafafa;
+}
+
+.intro {
+  text-align: center;
+}
+
+.title {
+  font-weight: bolder;
+  color: black;
+}
+
+.sub {
+  margin-bottom: 20px;
+  margin-top: -10px;
+  color: black;
+}
+
+.form {
+  margin-top: 20px;
+}
+
+.inv {
+  margin-bottom: 5px;
+}
+
+.cmulogo {
+  margin-bottom: 5px;
+}
+
+.faIconMain {
+  position: absolute;
+  top: 37%;
+  right: -23%;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.faIcon {
+  position: absolute;
+  top: 33%;
+  right: -40%;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.faIcon2 {
+  position: absolute;
+  top: 33%;
+  right: -40%;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.createAccModal {
+  background-color: transparent !important;
+}

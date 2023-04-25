@@ -1,0 +1,33 @@
+.Navigator {
+  position: sticky;
+  top: 0px;
+  min-height: 80px;
+  background-color: #2f4050;
+  border-bottom: 2px solid lightgray;
+}
+
+mark.green {
+  color: rgb(7, 153, 7);
+  background: none;
+  font-weight: bolder;
+}
+
+mark.yellow {
+  color: #fabd02;
+  background: none;
+  font-weight: bolder;
+}
+
+.home {
+  /* background-color: rgb(177, 242, 177); */
+  padding-right: 5px;
+  border-radius: 15px;
+}
+
+.logo {
+  margin-bottom: 3px;
+}
+
+.home1 {
+  color: #ececec !important;
+}

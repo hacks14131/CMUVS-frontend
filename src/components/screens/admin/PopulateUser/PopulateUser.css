@@ -1,0 +1,7 @@
+.page-container {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(rgb(180, 241, 172), rgb(255, 255, 159));
+  padding-bottom: 5em;
+  padding-top: 30px;
+}

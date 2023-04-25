@@ -1,0 +1,34 @@
+.page-container {
+  position: relative;
+  min-height: 100vh;
+  background: #ececec !important;
+  padding-bottom: 5em;
+  padding-top: 30px;
+}
+
+.homepage {
+  padding-bottom: 2.5rem;
+  font-weight: bold;
+  font-size: 35px;
+  background-color: white;
+  margin-bottom: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.cards {
+  margin-top: 15px;
+  padding: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.button {
+  width: 100%;
+}
+
+.card1 {
+  border-top: 3px solid green !important;
+}
+
