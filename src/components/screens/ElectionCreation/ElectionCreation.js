@@ -79,10 +79,10 @@ function ElectionCreation() {
       };
 
       const postElectionCanvassURL =
-        'http://localhost:5000/api/electionCanvass';
+        'https://cmuvs-api.onrender.com/api/electionCanvass';
       const postEletionPositionURL =
-        'http://localhost:5000/api/electionPosition';
-      //let expectedVoterURL = 'http://localhost:5000/api/voters/expected-voter-number';
+        'https://cmuvs-api.onrender.com/api/electionPosition';
+      //let expectedVoterURL = 'https://cmuvs-api.onrender.com/api/voters/expected-voter-number';
 
       let electionPositionsPromise = [];
       let electionID = '';
@@ -95,7 +95,7 @@ function ElectionCreation() {
       } = dateReadable;
       await axios
         .post(
-          'http://localhost:5000/api/election',
+          'https://cmuvs-api.onrender.com/api/election',
           {
             electionName,
             electionLevel,
@@ -115,7 +115,7 @@ function ElectionCreation() {
           console.log(error.message);
         });
       for (let i = 0; i < initialElectionPosition.length; i++) {
-        const expectedVoterURL = `http://localhost:5000/api/voters/expected-voter-number/${initialElectionPosition[i].allowedCollege}/${initialElectionPosition[i].allowedYearLevel}`;
+        const expectedVoterURL = `https://cmuvs-api.onrender.com/api/voters/expected-voter-number/${initialElectionPosition[i].allowedCollege}/${initialElectionPosition[i].allowedYearLevel}`;
         let expectedMaximumVoter = null;
         await axios
           .get(expectedVoterURL, config)
@@ -157,7 +157,8 @@ function ElectionCreation() {
 
   const postElectionCanvass = async (postURL, electionID, config) => {
     try {
-      const canvassOfficerURL = 'http://localhost:5000/api/canvassingOfficer';
+      const canvassOfficerURL =
+        'https://cmuvs-api.onrender.com/api/canvassingOfficer';
       let canvassOfficerPromise = [];
       let response = '';
       const canvassStatus = 'Pending';
@@ -216,7 +217,7 @@ function ElectionCreation() {
             ) {
               canvassPositionPromise.push(
                 postCanvassPosition(
-                  'http://localhost:5000/api/canvassPosition',
+                  'https://cmuvs-api.onrender.com/api/canvassPosition',
                   canvassingOfficerID,
                   canvassOfficer[i].assignedPosition[j],
                   config
@@ -303,7 +304,7 @@ function ElectionCreation() {
       const token = sessionStorage.getItem('token');
       const position = positionName;
       let positionID = '';
-      const getURL = `http://localhost:5000/api/electionPosition/positions/${electionID}/${position}`;
+      const getURL = `https://cmuvs-api.onrender.com/api/electionPosition/positions/${electionID}/${position}`;
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -331,7 +332,8 @@ function ElectionCreation() {
   ) => {
     try {
       const token = sessionStorage.getItem('token');
-      const postCandidateURL = 'http://localhost:5000/api/electionCandidate';
+      const postCandidateURL =
+        'https://cmuvs-api.onrender.com/api/electionCandidate';
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,

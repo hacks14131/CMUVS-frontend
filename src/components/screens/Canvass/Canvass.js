@@ -69,7 +69,7 @@ const Canvass = () => {
 
     const checkAndUpdateCanvassStatus = async (id) => {
       try {
-        const getCanvassStatusURL = `http://localhost:5000/api/canvassingOfficer/canvass-status/${id}`;
+        const getCanvassStatusURL = `https://cmuvs-api.onrender.com/api/canvassingOfficer/canvass-status/${id}`;
         const canvassStatus = await axios.get(getCanvassStatusURL, config);
         if (canvassStatus) {
           let status = true;
@@ -79,7 +79,7 @@ const Canvass = () => {
             }
           }
           if (status) {
-            const updateCanvassStatusURL = `http://localhost:5000/api/electionCanvass/update-canvass-status/${id}`;
+            const updateCanvassStatusURL = `https://cmuvs-api.onrender.com/api/electionCanvass/update-canvass-status/${id}`;
             await axios
               .patch(updateCanvassStatusURL, { message: 'nothing' }, config)
               .then((docs) => {});
@@ -94,7 +94,7 @@ const Canvass = () => {
 
     const fetchCanvassOfficerData = async () => {
       try {
-        const fetchCanvassOfficerDataURL = `http://localhost:5000/api/canvassingOfficer/canvass-list/${userID}`;
+        const fetchCanvassOfficerDataURL = `https://cmuvs-api.onrender.com/api/canvassingOfficer/canvass-list/${userID}`;
         let tempCanvassOfficerTaskListCopy = [];
         await axios.get(fetchCanvassOfficerDataURL, config).then((docs) => {
           if (docs) {
@@ -103,7 +103,7 @@ const Canvass = () => {
             for (let i = 0; i < temp.length; i++) {
               checkAndUpdateCanvassStatus(temp[i].electionCanvassID);
 
-              const getCanvasPositionDataURL = `http://localhost:5000/api/canvassPosition/canvass-get-positions/${temp[i]._id}`;
+              const getCanvasPositionDataURL = `https://cmuvs-api.onrender.com/api/canvassPosition/canvass-get-positions/${temp[i]._id}`;
               axios.get(getCanvasPositionDataURL, config).then((docs) => {
                 if (docs) {
                   temp[i].canvassPositionTask = [...docs.data];
@@ -124,7 +124,7 @@ const Canvass = () => {
         let finalCanvassList = [];
 
         for (let i = 0; i < tempCanvassOfficerTaskListCopy.length; i++) {
-          const getElectionCanvassDataURL = `http://localhost:5000/api/electionCanvass/get-canvass-data/${tempCanvassOfficerTaskListCopy[i].electionCanvassID}`;
+          const getElectionCanvassDataURL = `https://cmuvs-api.onrender.com/api/electionCanvass/get-canvass-data/${tempCanvassOfficerTaskListCopy[i].electionCanvassID}`;
           await axios.get(getElectionCanvassDataURL, config).then((docs) => {
             if (docs) {
               finalCanvassList.push(docs.data);
@@ -140,7 +140,7 @@ const Canvass = () => {
         setElectionCanvassList(finalCanvassList);
         let positionListPromise = [];
         const getAllElectionPositionsURL =
-          'http://localhost:5000/api/electionPosition/';
+          'https://cmuvs-api.onrender.com/api/electionPosition/';
         for (let i = 0; i < finalCanvassList.length; i++) {
           const candidatePositionPromise = await axios.get(
             `${getAllElectionPositionsURL}${finalCanvassList[i].electionID._id}`,
@@ -255,8 +255,8 @@ const Canvass = () => {
         sessionStorage.getItem('College and Department List')
       );
       const token = sessionStorage.getItem('token');
-      const voteHistoryURL = `http://localhost:5000/api/userVoteHistory/canvass-data/`;
-      const electionCandidatesURL = `http://localhost:5000/api/electionCandidate/candidate/`;
+      const voteHistoryURL = `https://cmuvs-api.onrender.com/api/userVoteHistory/canvass-data/`;
+      const electionCandidatesURL = `https://cmuvs-api.onrender.com/api/electionCandidate/candidate/`;
       let source = axios.CancelToken.source();
       const config = {
         headers: {
@@ -1482,7 +1482,7 @@ const Canvass = () => {
 
       const userID = sessionStorage.getItem('userID');
       const taskStatus = 'Finished';
-      const updateCanvassOfficerTaskStatusURL = `http://localhost:5000/api/canvassingOfficer/update-task-status/${userID}/${
+      const updateCanvassOfficerTaskStatusURL = `https://cmuvs-api.onrender.com/api/canvassingOfficer/update-task-status/${userID}/${
         electionCanvassList[selectedElection.current]._id
       }`;
       //const updateCanvassOfficerTaskStatus =
@@ -1492,7 +1492,7 @@ const Canvass = () => {
         config
       );
 
-      const getCanvasserInfoURL = `http://localhost:5000/api/canvassingOfficer/info/${userID}/${
+      const getCanvasserInfoURL = `https://cmuvs-api.onrender.com/api/canvassingOfficer/info/${userID}/${
         electionCanvassList[selectedElection.current]._id
       }`;
       let electionCanvassID = null;
@@ -1504,7 +1504,7 @@ const Canvass = () => {
         );
       }
 
-      const postCanvassResultURL = `http://localhost:5000/api/election-canvass/post-canvass-result`;
+      const postCanvassResultURL = `https://cmuvs-api.onrender.com/api/election-canvass/post-canvass-result`;
       const resultInformation = JSON.stringify(finalCanvassInformation);
       // const canvassDate = new Date();
 
@@ -1520,11 +1520,11 @@ const Canvass = () => {
         )
         .then(async () => {
           //last task here
-          const updateElectionStatusURL = `http://localhost:5000/api/election/update-election/${
+          const updateElectionStatusURL = `https://cmuvs-api.onrender.com/api/election/update-election/${
             electionCanvassList[selectedElectionCanvassTask.current].electionID
               ._id
           }`;
-          const updateCanvassStatusURL = `http://localhost:5000/api/electionCanvass/update-canvass-status/${electionCanvassID}`;
+          const updateCanvassStatusURL = `https://cmuvs-api.onrender.com/api/electionCanvass/update-canvass-status/${electionCanvassID}`;
           const electionStatus = 'Finished';
           // console.log(electionCanvassList);
           await axios
@@ -1539,7 +1539,7 @@ const Canvass = () => {
 
       // const checkAndUpdateCanvassStatus = async (id) => {
       //   try {
-      //     const getCanvassStatusURL = `http://localhost:5000/api/canvassingOfficer/canvass-status/${id}`;
+      //     const getCanvassStatusURL = `https://cmuvs-api.onrender.com/api/canvassingOfficer/canvass-status/${id}`;
       //     const canvassStatus = await axios.get(getCanvassStatusURL, config);
       //     if (canvassStatus) {
       //       let status = true;
@@ -1549,7 +1549,7 @@ const Canvass = () => {
       //         }
       //       }
       //       if (status) {
-      //         const updateCanvassStatusURL = `http://localhost:5000/api/electionCanvass/update-canvass-status/${id}`;
+      //         const updateCanvassStatusURL = `https://cmuvs-api.onrender.com/api/electionCanvass/update-canvass-status/${id}`;
       //         await axios
       //           .patch(updateCanvassStatusURL, { message: 'nothing' }, config)
       //           .then((docs) => {});

@@ -28,7 +28,7 @@ const LoginPage = () => {
         cancelToken: canvasserSource.token,
       };
       // const adminSource = axios.CancelToken.source();
-      // const checkForAdminRightsURL = `http://localhost:5000/api/admin-check/${userData._id}`;
+      // const checkForAdminRightsURL = `https://cmuvs-api.onrender.com/api/admin-check/${userData._id}`;
 
       // await axios
       //   .get(checkForAdminRightsURL, config)
@@ -41,7 +41,7 @@ const LoginPage = () => {
       //     sessionStorage.setItem('isAdmin', false);
       //   });
       sessionStorage.setItem('isAdmin', false);
-      const checkForCanvasserRightsURL = `http://localhost:5000/api/canvasser-rights-check/${userData._id}`;
+      const checkForCanvasserRightsURL = `https://cmuvs-api.onrender.com/api/canvasser-rights-check/${userData._id}`;
       config = {
         headers: {
           'Content-type': 'application/json',
@@ -62,7 +62,7 @@ const LoginPage = () => {
         });
 
       const candidateSource = axios.CancelToken.source();
-      const checkForElectionCandidateRightsURL = `http://localhost:5000/api/election-candidate-check/${userData._id}`;
+      const checkForElectionCandidateRightsURL = `https://cmuvs-api.onrender.com/api/election-candidate-check/${userData._id}`;
       config = {
         headers: {
           'Content-type': 'application/json',
@@ -160,7 +160,7 @@ const LoginPage = () => {
 
         await axios
           .post(
-            'http://localhost:5000/api/login',
+            'https://cmuvs-api.onrender.com/api/login',
             {
               username,
               accountPassword,
@@ -172,7 +172,7 @@ const LoginPage = () => {
               const studentInfo = res.data;
               const _id = res.data._id;
               const studentID = res.data.studentID;
-              const getUserLatestInfoURL = `http://localhost:5000/api/voters/user/data/get`;
+              const getUserLatestInfoURL = `https://cmuvs-api.onrender.com/api/voters/user/data/get`;
               let college = '';
               let department = '';
               let yearLevel = '';
@@ -198,7 +198,7 @@ const LoginPage = () => {
                           'Content-type': 'application/json',
                         },
                       };
-                      const patchUserInfoURL = `http://localhost:5000/api/user/update-user-information/${_id}`;
+                      const patchUserInfoURL = `https://cmuvs-api.onrender.com/api/user/update-user-information/${_id}`;
                       await axios
                         .patch(
                           patchUserInfoURL,
@@ -229,7 +229,7 @@ const LoginPage = () => {
       };
       await axios
         .get(
-          `http://localhost:5000/api/admin-check/${username}/${accountPassword}`,
+          `https://cmuvs-api.onrender.com/api/admin-check/${username}/${accountPassword}`,
           config
         )
         .then((docs) => {
@@ -265,7 +265,7 @@ const LoginPage = () => {
         },
       };
 
-      const postCMUVSUserAccountURL = `http://localhost:5000/api/user`;
+      const postCMUVSUserAccountURL = `https://cmuvs-api.onrender.com/api/user`;
       const _id = studentData.current._id;
       const studentID = studentData.current.studentID;
       const firstName = studentData.current.firstName;
@@ -314,7 +314,7 @@ const LoginPage = () => {
         },
       };
 
-      const checkDTODBURL = `http://localhost:5000/api/voters/auth-user`;
+      const checkDTODBURL = `https://cmuvs-api.onrender.com/api/voters/auth-user`;
       const studentID = userInfo.studentID;
       const firstName = userInfo.firstName;
       const familyName = userInfo.familyName;
@@ -406,7 +406,7 @@ const LoginPage = () => {
         },
       };
 
-      const checkCredentialsCMUVSURL = `http://localhost:5000/api/user/sign-up-validator`;
+      const checkCredentialsCMUVSURL = `https://cmuvs-api.onrender.com/api/user/sign-up-validator`;
 
       const firstName = userInfo.firstName;
       const familyName = userInfo.familyName;
@@ -451,7 +451,7 @@ const LoginPage = () => {
   //         'Content-type': 'application/json',
   //       },
   //     };
-  //     const createAdminURL = `http://localhost:5000/api/admin-check/${username}/${accountPassword}`;
+  //     const createAdminURL = `https://cmuvs-api.onrender.com/api/admin-check/${username}/${accountPassword}`;
   //     await axios
   //       .post(createAdminURL, config)
   //       .then((docs) => console.log(docs))

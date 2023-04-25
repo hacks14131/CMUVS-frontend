@@ -63,14 +63,14 @@ const Results = () => {
         cancelToken: source.token,
       };
       const electionID = location.state._id;
-      const fetchAllElectionPositionURL = `http://localhost:5000/api/electionPosition/${electionID}`;
-      const fetchAllElectionCandidateURL = `http://localhost:5000/api/electionCandidate/candidate/${electionID}`;
-      const fetchAllVoteHistoryURL = `http://localhost:5000/api/userVoteHistory/${electionID}`;
+      const fetchAllElectionPositionURL = `https://cmuvs-api.onrender.com/api/electionPosition/${electionID}`;
+      const fetchAllElectionCandidateURL = `https://cmuvs-api.onrender.com/api/electionCandidate/candidate/${electionID}`;
+      const fetchAllVoteHistoryURL = `https://cmuvs-api.onrender.com/api/userVoteHistory/${electionID}`;
 
       const getVoterParticipationQuantity = async (positionID) => {
         try {
           return new Promise((resolve) => {
-            const getVoterParticipationQuantityURL = `http://localhost:5000/api/userVoteHistory/${electionID}/${positionID}`;
+            const getVoterParticipationQuantityURL = `https://cmuvs-api.onrender.com/api/userVoteHistory/${electionID}/${positionID}`;
 
             axios.get(getVoterParticipationQuantityURL, config).then((docs) => {
               if (docs.data.votedCount) {
@@ -88,9 +88,9 @@ const Results = () => {
       const getCandidateProfile = (user, candidateID, lastIndex) => {
         try {
           return new Promise((resolve) => {
-            const getProfilePicURL = `http://localhost:5000/api/candidatePicture/${user}`;
-            const getMottoURL = `http://localhost:5000/api/motto/${candidateID}`;
-            const getPlatformURL = `http://localhost:5000/api/platform/${candidateID}`;
+            const getProfilePicURL = `https://cmuvs-api.onrender.com/api/candidatePicture/${user}`;
+            const getMottoURL = `https://cmuvs-api.onrender.com/api/motto/${candidateID}`;
+            const getPlatformURL = `https://cmuvs-api.onrender.com/api/platform/${candidateID}`;
             let profilePicture = null;
             let convertedPic = null;
             let motto = null;

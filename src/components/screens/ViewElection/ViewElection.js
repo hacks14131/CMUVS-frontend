@@ -78,7 +78,7 @@ const ViewElection = () => {
             clearInterval(intervalInitial);
             clearTimeout(initialInformationInterval);
             // console.log('runnig update method');
-            const fetchCanvassElectionURL = `http://localhost:5000/api/electionCanvass/get-canvassed-elections/${college}/${department}`;
+            const fetchCanvassElectionURL = `https://cmuvs-api.onrender.com/api/electionCanvass/get-canvassed-elections/${college}/${department}`;
             const canvassedElectionTemp = await axios.get(
               fetchCanvassElectionURL,
               config
@@ -100,7 +100,7 @@ const ViewElection = () => {
               filteredElection = [...unfiltered];
               let vottingStatusTemp = [];
               for (let i = 0; i < filteredElection.length; i++) {
-                const getVoteStatusURL = `http://localhost:5000/api/userVoteHistory/status/${userID}/${filteredElection[i]._id}`;
+                const getVoteStatusURL = `https://cmuvs-api.onrender.com/api/userVoteHistory/status/${userID}/${filteredElection[i]._id}`;
                 const currentDate = new Date().getTime();
                 const docs = await axios.get(getVoteStatusURL, config);
                 if (
@@ -159,7 +159,7 @@ const ViewElection = () => {
         try {
           // console.log('fetching initial information');
           // fethCanvassElectionInitial = setInterval(async () => {
-          const fetchCanvassElectionURL = `http://localhost:5000/api/electionCanvass/get-canvassed-elections/${college}/${department}`;
+          const fetchCanvassElectionURL = `https://cmuvs-api.onrender.com/api/electionCanvass/get-canvassed-elections/${college}/${department}`;
           const canvassedElectionTemp = await axios.get(
             fetchCanvassElectionURL,
             config
@@ -180,7 +180,7 @@ const ViewElection = () => {
             filteredElection = [...unfiltered];
             let vottingStatusTemp = [];
             for (let i = 0; i < filteredElection.length; i++) {
-              const getVoteStatusURL = `http://localhost:5000/api/userVoteHistory/status/${userID}/${filteredElection[i]._id}`;
+              const getVoteStatusURL = `https://cmuvs-api.onrender.com/api/userVoteHistory/status/${userID}/${filteredElection[i]._id}`;
               const currentDate = new Date().getTime();
               const docs = await axios.get(getVoteStatusURL, config);
               if (
@@ -323,7 +323,7 @@ const ViewElection = () => {
         },
         CancelToken: source.token,
       };
-      const fetchCanvassedResultURL = `http://localhost:5000/api/election-canvass/get-canvass-result/${canvassID}`;
+      const fetchCanvassedResultURL = `https://cmuvs-api.onrender.com/api/election-canvass/get-canvass-result/${canvassID}`;
       const canvassedResult = await axios.get(fetchCanvassedResultURL, config);
       if (canvassedResult) {
         const result = JSON.parse(canvassedResult.data.resultInformation);
@@ -388,7 +388,7 @@ const ViewElection = () => {
           minutes < 10 ? '0' + minutes : minutes
         } ${hour > 12 ? 'pm' : 'am'}`;
         // console.log(typeof canvassDate);
-        const getCanvassingOfficerInformationURL = `http://localhost:5000/api/canvassingOfficer/info/${canvassID}`;
+        const getCanvassingOfficerInformationURL = `https://cmuvs-api.onrender.com/api/canvassingOfficer/info/${canvassID}`;
         const getCanvassingOfficerInformation = await axios.get(
           getCanvassingOfficerInformationURL,
           config

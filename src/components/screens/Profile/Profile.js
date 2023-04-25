@@ -52,13 +52,13 @@ const Profile = () => {
       cancelToken: source.token,
     };
 
-    const getElectionCandidateIDURL = `http://localhost:5000/api/electionCandidate/${userID}`;
+    const getElectionCandidateIDURL = `https://cmuvs-api.onrender.com/api/electionCandidate/${userID}`;
 
     axios
       .get(getElectionCandidateIDURL, config)
       .then((docs) => {
         electionCandidateID = docs.data._id;
-        const checkCandidateMottoInstanceURL = `http://localhost:5000/api/motto/${electionCandidateID}`;
+        const checkCandidateMottoInstanceURL = `https://cmuvs-api.onrender.com/api/motto/${electionCandidateID}`;
         axios
           .get(checkCandidateMottoInstanceURL, config)
           .then((checkCandidateMottoInstanceResult) => {
@@ -76,9 +76,9 @@ const Profile = () => {
         console.log(error);
         history('/home');
       });
-    const fetchUserBasicInfoURL = `http://localhost:5000/api/user/${studentID}`;
+    const fetchUserBasicInfoURL = `https://cmuvs-api.onrender.com/api/user/${studentID}`;
 
-    const checkUserProfilePicURL = `http://localhost:5000/api/candidatePicture/${userID}`;
+    const checkUserProfilePicURL = `https://cmuvs-api.onrender.com/api/candidatePicture/${userID}`;
 
     axios
       .get(checkUserProfilePicURL, config)
@@ -163,7 +163,7 @@ const Profile = () => {
         cancelToken: source.cancelToken,
       };
 
-      const getElectionCandidateIDURL = `http://localhost:5000/api/electionCandidate/${userID}`;
+      const getElectionCandidateIDURL = `https://cmuvs-api.onrender.com/api/electionCandidate/${userID}`;
 
       await axios
         .get(getElectionCandidateIDURL, config)
@@ -171,9 +171,9 @@ const Profile = () => {
           electionCandidateID = candidate.data._id;
         })
         .catch((error) => console.log(error));
-      const postCandidateMottoURL = `http://localhost:5000/api/motto`;
-      const postCandidatePlatformURL = `http://localhost:5000/api/platform`;
-      const postCandidateProfilePictureURL = `http://localhost:5000/api/candidatePicture`;
+      const postCandidateMottoURL = `https://cmuvs-api.onrender.com/api/motto`;
+      const postCandidatePlatformURL = `https://cmuvs-api.onrender.com/api/platform`;
+      const postCandidateProfilePictureURL = `https://cmuvs-api.onrender.com/api/candidatePicture`;
 
       const promises = [];
       if (selectedFile !== null) {

@@ -43,7 +43,7 @@ function ElectionHistory() {
     setLoading(true);
     const source = axios.CancelToken.source();
     const token = sessionStorage.getItem('token');
-    const fetchElectionsHistoryURL = `http://localhost:5000/api/election/get-election/history`;
+    const fetchElectionsHistoryURL = `https://cmuvs-api.onrender.com/api/election/get-election/history`;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -132,7 +132,7 @@ function ElectionHistory() {
 
   const displayBody = async (election) => {
     try {
-      const logURL = `http://localhost:5000/api/userVoteHistory/${election._id}`;
+      const logURL = `https://cmuvs-api.onrender.com/api/userVoteHistory/${election._id}`;
       const source = axios.CancelToken.source();
       const token = sessionStorage.getItem('token');
       const config = {

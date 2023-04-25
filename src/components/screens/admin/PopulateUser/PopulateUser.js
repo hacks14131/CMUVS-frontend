@@ -50,7 +50,7 @@ const PopulateUser = () => {
           'Content-type': 'application/json',
         },
       };
-      const studentDeactivationURL = `http://localhost:5000/api/user/deactivate-students/status`;
+      const studentDeactivationURL = `https://cmuvs-api.onrender.com/api/user/deactivate-students/status`;
       await axios.patch(studentDeactivationURL, {}, config);
       if (data.length !== 0) {
         let addVotersPromise = [];
@@ -85,7 +85,7 @@ const PopulateUser = () => {
         .toLowerCase()
         .replace(/\s+/g, '')}`;
       const accountPassword = 'cmuvsdefaultpassword';
-      const addVoterURL = `http://localhost:5000/api/user`;
+      const addVoterURL = `https://cmuvs-api.onrender.com/api/user`;
       const token = sessionStorage.getItem('token');
       const config = {
         headers: {

@@ -30,7 +30,7 @@ const ConcludeElection = () => {
     setLoading(true);
     let source = axios.CancelToken.source();
     const token = sessionStorage.getItem('token');
-    const fetchActiveElectionURL = `http://localhost:5000/api/election/get-election/active`;
+    const fetchActiveElectionURL = `https://cmuvs-api.onrender.com/api/election/get-election/active`;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ const ConcludeElection = () => {
       setLoading(true);
       const source = axios.CancelToken.source();
       const token = sessionStorage.getItem('token');
-      const patchElectionURL = `http://localhost:5000/api/election/update-election/${
+      const patchElectionURL = `https://cmuvs-api.onrender.com/api/election/update-election/${
         election[selectedElection.current]._id
       }`;
       const config = {
@@ -107,7 +107,7 @@ const ConcludeElection = () => {
 
   const updateElection = async (elec) => {
     try {
-      const extendElectionURL = `http://localhost:5000/api/election/extend-election/${elec._id}`;
+      const extendElectionURL = `https://cmuvs-api.onrender.com/api/election/extend-election/${elec._id}`;
       const source = axios.CancelToken.source();
       const token = sessionStorage.getItem('token');
       const electionClosingDate = extendedElectionDate;

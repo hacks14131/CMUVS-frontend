@@ -60,7 +60,7 @@ const Home = () => {
         },
         cancelToken: axiosReqID.current.token,
       };
-      const getVoteStatusURL = `http://localhost:5000/api/userVoteHistory/status/${userID}/${electionID}`;
+      const getVoteStatusURL = `https://cmuvs-api.onrender.com/api/userVoteHistory/status/${userID}/${electionID}`;
       await axios.get(getVoteStatusURL, config).then((res) => {
         if (
           res.data === null &&
@@ -100,10 +100,10 @@ const Home = () => {
       const fetchElections = () => {
         const userCollege = sessionStorage.getItem('college');
         const userDepartment = sessionStorage.getItem('department');
-        const universityURL = 'http://localhost:5000/api/election';
-        const collegeURL = `http://localhost:5000/api/election/college/${userCollege}`;
-        const departmentURL = `http://localhost:5000/api/election/department/${userDepartment}`;
-        const getCollegeAndDepartmentListURL = `http://localhost:5000/api/voters/list`;
+        const universityURL = 'https://cmuvs-api.onrender.com/api/election';
+        const collegeURL = `https://cmuvs-api.onrender.com/api/election/college/${userCollege}`;
+        const departmentURL = `https://cmuvs-api.onrender.com/api/election/department/${userDepartment}`;
+        const getCollegeAndDepartmentListURL = `https://cmuvs-api.onrender.com/api/voters/list`;
 
         const universityElection = axios.get(universityURL, config);
 
@@ -257,9 +257,9 @@ const Home = () => {
         const fetchElections = () => {
           const userCollege = sessionStorage.getItem('college');
           const userDepartment = sessionStorage.getItem('department');
-          const universityURL = 'http://localhost:5000/api/election';
-          const collegeURL = `http://localhost:5000/api/election/college/${userCollege}`;
-          const departmentURL = `http://localhost:5000/api/election/department/${userDepartment}`;
+          const universityURL = 'https://cmuvs-api.onrender.com/api/election';
+          const collegeURL = `https://cmuvs-api.onrender.com/api/election/college/${userCollege}`;
+          const departmentURL = `https://cmuvs-api.onrender.com/api/election/department/${userDepartment}`;
 
           const universityElection = axios.get(universityURL, config);
 
@@ -400,7 +400,7 @@ const Home = () => {
           'Content-type': 'application/json',
         },
       };
-      const validateVoterURL = `http://localhost:5000/api/voters/validate/voter`;
+      const validateVoterURL = `https://cmuvs-api.onrender.com/api/voters/validate/voter`;
       const studentID = userIDNumber;
       const registrationNumber = userRegistrationNumber;
       const _id = sessionStorage.getItem('userID');

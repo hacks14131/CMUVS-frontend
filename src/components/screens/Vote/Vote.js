@@ -57,11 +57,11 @@ function Vote() {
       }
 
       const electionID = location.state._id;
-      const fetchElectionPositionsURL = `http://localhost:5000/api/electionPosition/${electionID}`;
-      const fetchElectionCandidatesURL = `http://localhost:5000/api/electionCandidate/candidate/${electionID}`;
-      // const candidateProfilePic = `http://localhost:5000/api/candidatePicture/`;
-      // const candidateMottoURL = `http://localhost:5000/api/motto/`;
-      // const candidatePlatformURL = `http://localhost:5000/api/platform`;
+      const fetchElectionPositionsURL = `https://cmuvs-api.onrender.com/api/electionPosition/${electionID}`;
+      const fetchElectionCandidatesURL = `https://cmuvs-api.onrender.com/api/electionCandidate/candidate/${electionID}`;
+      // const candidateProfilePic = `https://cmuvs-api.onrender.com/api/candidatePicture/`;
+      // const candidateMottoURL = `https://cmuvs-api.onrender.com/api/motto/`;
+      // const candidatePlatformURL = `https://cmuvs-api.onrender.com/api/platform`;
 
       const fetchElectionPositions = () => {
         const fetchPositions = axios.get(fetchElectionPositionsURL, config);
@@ -139,9 +139,9 @@ function Vote() {
                 j < positionAndCandidateClone[i].candidates.length;
                 j++
               ) {
-                candidateProfilePicURL = `http://localhost:5000/api/candidatePicture/${positionAndCandidateClone[i].candidates[j].userID._id}`;
-                candidateMottoURL = `http://localhost:5000/api/motto/${positionAndCandidateClone[i].candidates[j]._id}`;
-                candidatePlatformURL = `http://localhost:5000/api/platform/${positionAndCandidateClone[i].candidates[j]._id}`;
+                candidateProfilePicURL = `https://cmuvs-api.onrender.com/api/candidatePicture/${positionAndCandidateClone[i].candidates[j].userID._id}`;
+                candidateMottoURL = `https://cmuvs-api.onrender.com/api/motto/${positionAndCandidateClone[i].candidates[j]._id}`;
+                candidatePlatformURL = `https://cmuvs-api.onrender.com/api/platform/${positionAndCandidateClone[i].candidates[j]._id}`;
 
                 Promise.all([
                   axios.get(candidateProfilePicURL, config),
@@ -419,7 +419,7 @@ function Vote() {
       const userID = sessionStorage.getItem('userID');
       const electionID = location.state._id;
       const postUserVoteHistoryURL =
-        'http://localhost:5000/api/userVoteHistory';
+        'https://cmuvs-api.onrender.com/api/userVoteHistory';
 
       let postUserVoteHistoryPromise = [];
       for (let i = 0; i < votingData.length; i++) {

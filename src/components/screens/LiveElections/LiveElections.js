@@ -59,9 +59,9 @@ const LiveElections = () => {
       ) => {
         try {
           return new Promise((resolve) => {
-            const getProfilePicURL = `http://localhost:5000/api/candidatePicture/${userID}`;
-            const getMottoURL = `http://localhost:5000/api/motto/${candidateID}`;
-            const getPlatformURL = `http://localhost:5000/api/platform/${candidateID}`;
+            const getProfilePicURL = `https://cmuvs-api.onrender.com/api/candidatePicture/${userID}`;
+            const getMottoURL = `https://cmuvs-api.onrender.com/api/motto/${candidateID}`;
+            const getPlatformURL = `https://cmuvs-api.onrender.com/api/platform/${candidateID}`;
 
             const getProfilePicPromise = axios.get(getProfilePicURL, config);
             const getMottoPromise = axios.get(getMottoURL, config);
@@ -122,9 +122,9 @@ const LiveElections = () => {
       let time = 100;
 
       const electionID = location.state._id;
-      const getAllElectionCandidatesURL = `http://localhost:5000/api/electionCandidate/candidate/${electionID}`;
-      const getAllElectionPositionsURL = `http://localhost:5000/api/electionPosition/${electionID}`;
-      const getAllVoteHistoryByElectionIDURL = `http://localhost:5000/api/userVoteHistory/${electionID}`;
+      const getAllElectionCandidatesURL = `https://cmuvs-api.onrender.com/api/electionCandidate/candidate/${electionID}`;
+      const getAllElectionPositionsURL = `https://cmuvs-api.onrender.com/api/electionPosition/${electionID}`;
+      const getAllVoteHistoryByElectionIDURL = `https://cmuvs-api.onrender.com/api/userVoteHistory/${electionID}`;
 
       const getAllElectionPositions = axios.get(
         getAllElectionPositionsURL,
