@@ -79,21 +79,11 @@ const LiveElections = () => {
                   getPlatformPromiseResult,
                 ]) => {
                   let profilePicture = null;
-                  let convertedPic = null;
                   let motto = null;
                   let platform = [null];
                   if (getProfilePicPromiseResult.data) {
                     profilePicture =
-                      getProfilePicPromiseResult.data.profilePicture;
-                    convertedPic = btoa(
-                      new Uint8Array(profilePicture.data.data).reduce(function (
-                        data,
-                        byte
-                      ) {
-                        return data + String.fromCharCode(byte);
-                      },
-                      '')
-                    );
+                      getProfilePicPromiseResult.data.profilePicture.url;
                   }
                   if (getMottoPromiseResult.data) {
                     motto = getMottoPromiseResult.data;
@@ -102,7 +92,7 @@ const LiveElections = () => {
                     platform = [...getPlatformPromiseResult.data];
                   }
                   resolve({
-                    picture: convertedPic,
+                    picture: profilePicture,
                     motto: motto,
                     platform: platform,
                   });
@@ -546,14 +536,8 @@ const LiveElections = () => {
                     <center>
                       <Figure>
                         <Figure.Image
-                          width={150}
-                          height={150}
                           alt={defaultImage}
-                          src={
-                            selectedCandidate.profilePic
-                              ? `data:image/png; base64,${selectedCandidate.profilePic}`
-                              : defaultImage
-                          }
+                          src={selectedCandidate.profilePic}
                           thumbnail
                         />
                         {selectedCandidate.profilePic === null && (

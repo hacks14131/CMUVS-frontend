@@ -35,6 +35,7 @@ const Profile = () => {
   const [hasProfilePic, setHasProfilePic] = useState(null);
   const [prevMotto, setPrevMotto] = useState('');
   const [successfullUpdateModal, setSuccessfullUpdateModal] = useState(false);
+  const [image, setImage] = useState(null);
 
   const history = useNavigate();
 
@@ -86,13 +87,8 @@ const Profile = () => {
         if (checkUserProfilePicResult.data === null) {
           setHasProfilePic((prevState) => false);
         } else {
-          const profilePic = checkUserProfilePicResult.data.profilePicture;
-          const convertedPic = btoa(
-            new Uint8Array(profilePic.data.data).reduce(function (data, byte) {
-              return data + String.fromCharCode(byte);
-            }, '')
-          );
-          setPostedProfilePic((prevState) => convertedPic);
+          const profilePic = checkUserProfilePicResult.data.profilePicture.url;
+          setPostedProfilePic(profilePic);
           setHasProfilePic((prevState) => true);
         }
         setLoading((prevState) => false);
@@ -137,7 +133,6 @@ const Profile = () => {
     try {
       const userID = sessionStorage.getItem('userID');
       const token = sessionStorage.getItem('token');
-      let formdata = new FormData();
       if (selectedFile) {
         const fileType = selectedFile['type'];
         const validFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
@@ -145,8 +140,6 @@ const Profile = () => {
           alert('Invalid file type. Only upload png, jpg, jpeg');
           window.location.reload(false);
         }
-        formdata.append('userID', userID);
-        formdata.append('profilePicture', selectedFile);
       }
 
       setLoading((prevState) => true);
@@ -180,14 +173,19 @@ const Profile = () => {
         if (hasProfilePic) {
           const postCandidateProfilePicture = axios.patch(
             `${postCandidateProfilePictureURL}/${userID}`,
-            formdata,
+            {
+              profilePicture: image,
+            },
             config
           );
           promises.push(postCandidateProfilePicture);
         } else {
           const postCandidateProfilePicture = axios.post(
             postCandidateProfilePictureURL,
-            formdata,
+            {
+              userID,
+              profilePicture: image,
+            },
             config
           );
           promises.push(postCandidateProfilePicture);
@@ -233,7 +231,7 @@ const Profile = () => {
         })
         .catch((error) => console.log(error));
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -266,6 +264,8 @@ const Profile = () => {
   const uploadFileHandler = (event) => {
     try {
       if (event.target.files[0]) {
+        const file = event.target.files[0];
+        setFileToBase(file);
         setSelectedFile((prevState) => event.target.files[0]);
         setDisplayImage((prevState) =>
           URL.createObjectURL(event.target.files[0])
@@ -274,6 +274,14 @@ const Profile = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
   };
 
   return (
@@ -309,7 +317,7 @@ const Profile = () => {
                             height={70}
                             alt='171x180'
                             thumbnail
-                            src={`data:image/png; base64,${postedProfilePic}`}
+                            src={postedProfilePic}
                           />
                         </Figure>
                       )}
