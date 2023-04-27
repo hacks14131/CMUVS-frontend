@@ -537,7 +537,11 @@ const LiveElections = () => {
                       <Figure>
                         <Figure.Image
                           alt={defaultImage}
-                          src={selectedCandidate.profilePic}
+                          src={
+                            selectedCandidate.profilePic
+                              ? selectedCandidate.profilePic
+                              : defaultImage
+                          }
                           thumbnail
                         />
                         {selectedCandidate.profilePic === null && (

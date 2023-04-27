@@ -158,27 +158,30 @@ const Profile = () => {
 
       const getElectionCandidateIDURL = `https://cmuvs-api.onrender.com/api/electionCandidate/${userID}`;
 
-      await axios
-        .get(getElectionCandidateIDURL, config)
-        .then((candidate) => {
-          electionCandidateID = candidate.data._id;
-        })
-        .catch((error) => console.log(error));
+      await axios.get(getElectionCandidateIDURL, config).then((candidate) => {
+        electionCandidateID = candidate.data._id;
+      });
       const postCandidateMottoURL = `https://cmuvs-api.onrender.com/api/motto`;
       const postCandidatePlatformURL = `https://cmuvs-api.onrender.com/api/platform`;
       const postCandidateProfilePictureURL = `https://cmuvs-api.onrender.com/api/candidatePicture`;
 
+      // let formdata = new FormData();
+      // formdata.append('userID', userID);
+      // formdata.append('profilePicture', image);
+      // console.log('Form Data: ', formdata);
+
       const promises = [];
       if (selectedFile !== null) {
         if (hasProfilePic) {
-          const postCandidateProfilePicture = axios.patch(
-            `${postCandidateProfilePictureURL}/${userID}`,
+          const patchCandidateProfilePicture = await axios.patch(
+            `${postCandidateProfilePictureURL}/update-candidate-profile`,
             {
+              userID,
               profilePicture: image,
             },
             config
           );
-          promises.push(postCandidateProfilePicture);
+          promises.push(patchCandidateProfilePicture);
         } else {
           const postCandidateProfilePicture = axios.post(
             postCandidateProfilePictureURL,
@@ -226,12 +229,11 @@ const Profile = () => {
       Promise.all(promises)
         .then(() => {
           setLoading((prevState) => false);
-          //display a modal
           setSuccessfullUpdateModal(true);
         })
         .catch((error) => console.log(error));
     } catch (error) {
-      console.log(error.message);
+      console.log('Error: ', error);
     }
   };
 
@@ -266,10 +268,8 @@ const Profile = () => {
       if (event.target.files[0]) {
         const file = event.target.files[0];
         setFileToBase(file);
-        setSelectedFile((prevState) => event.target.files[0]);
-        setDisplayImage((prevState) =>
-          URL.createObjectURL(event.target.files[0])
-        );
+        setSelectedFile(event.target.files[0]);
+        setDisplayImage(URL.createObjectURL(event.target.files[0]));
       }
     } catch (error) {
       console.log(error);
@@ -300,7 +300,7 @@ const Profile = () => {
                           <Figure.Image
                             width={130}
                             height={70}
-                            alt='171x180'
+                            alt='image'
                             thumbnail
                             src={
                               displayImage !== null
