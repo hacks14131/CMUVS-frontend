@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
+import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Footer from './components/footer/Footer';
@@ -29,7 +24,7 @@ function App() {
   const state = useSelector((state) => state.reducers.userLogReducer);
 
   return (
-    <Router>
+    <HashRouter hashType='slash'>
       {state && <Header isLogin={state} />}
       <Routes>
         <Route path='*' element={<Navigate to={'/'} />} />
@@ -164,7 +159,7 @@ function App() {
         /> */}
       </Routes>
       {<Footer isLogin={state} />}
-    </Router>
+    </HashRouter>
   );
 }
 
