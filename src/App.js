@@ -29,7 +29,7 @@ function App() {
   const state = useSelector((state) => state.reducers.userLogReducer);
 
   return (
-    <Router basename='CMUVS-frontend'>
+    <Router>
       {state && <Header isLogin={state} />}
       <Routes>
         <Route path='*' element={<Navigate to={'/'} />} />
