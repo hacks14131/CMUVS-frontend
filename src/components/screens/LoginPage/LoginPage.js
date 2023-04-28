@@ -570,7 +570,7 @@ const LoginPage = () => {
                             </Button>
                           </Form>
                         </div>
-                        <Container className='text-muted'>
+                        {/* <Container className='text-muted'>
                           Don't have an account?{' '}
                           <u
                             className='text-primary'
@@ -583,7 +583,7 @@ const LoginPage = () => {
                           >
                             Sign up
                           </u>
-                        </Container>
+                        </Container> */}
                       </CardBody>
                     </Card>
                   </Card>
