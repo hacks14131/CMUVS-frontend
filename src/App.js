@@ -22,13 +22,14 @@ import ViewProfile from './components/screens/ViewProfile/ViewProfile';
 import ConcludeElection from './components/screens/ConcludeElection/ConcludeElection';
 import Canvass from './components/screens/Canvass/Canvass';
 import PopulateUser from './components/screens/admin/PopulateUser/PopulateUser';
+import ChangePassword from './components/screens/password/ChangePassword';
 // import Logs from './components/screens/Logs/Logs';
 
 function App() {
   const state = useSelector((state) => state.reducers.userLogReducer);
 
   return (
-    <Router>
+    <Router basename='CMUVS-frontend'>
       {state && <Header isLogin={state} />}
       <Routes>
         <Route path='*' element={<Navigate to={'/'} />} />
@@ -131,6 +132,15 @@ function App() {
           element={
             <PrivateRoute>
               <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path='/change-password'
+          element={
+            <PrivateRoute>
+              <ChangePassword />
             </PrivateRoute>
           }
         />

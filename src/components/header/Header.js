@@ -90,6 +90,41 @@ const Header = (props) => {
             </Nav>
 
             <Nav>
+              <NavDropdown
+                title={<span className='text-white my-auto'>Account</span>}
+              >
+                {isCandidate.current && (
+                  <NavDropdown.Item as={Link} to='/my-profile'>
+                    Profile
+                  </NavDropdown.Item>
+                )}
+                <NavDropdown.Item as={Link} to='/change-password'>
+                  RESET Password
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => {
+                    logUser(false);
+                    sessionStorage.removeItem('userID');
+                    sessionStorage.removeItem('studentID');
+                    sessionStorage.removeItem('auth');
+                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('college');
+                    sessionStorage.removeItem('department');
+                    sessionStorage.removeItem('College and Department List');
+                    sessionStorage.removeItem('voteValidated');
+                    sessionStorage.removeItem('yearLevel');
+                    sessionStorage.removeItem('isAdmin');
+                    sessionStorage.removeItem('isCanvasser');
+                    sessionStorage.removeItem('isCandidate');
+                    history('/login');
+                  }}
+                >
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+
+            {/* <Nav>
               {isCandidate.current && (
                 <Nav.Link className='home1' as={Link} to='/my-profile'>
                   Profile
@@ -117,7 +152,7 @@ const Header = (props) => {
               >
                 Logout
               </Nav.Link>
-            </Nav>
+            </Nav> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>
