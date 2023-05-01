@@ -570,7 +570,7 @@ const LoginPage = () => {
                             </Button>
                           </Form>
                         </div>
-                        {/* <Container className='text-muted'>
+                        {/* <Container className='text-muted'>https://cmuvs-api.onrender.com
                           Don't have an account?{' '}
                           <u
                             className='text-primary'

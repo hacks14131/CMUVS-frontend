@@ -142,9 +142,10 @@ function ElectionHistory() {
         },
         cancelToken: source.token,
       };
-
+      setLoading(true);
       const logs = await axios.get(logURL, config);
       setLogData([...logs.data]);
+      setLoading(false);
     } catch (error) {}
   };
 
