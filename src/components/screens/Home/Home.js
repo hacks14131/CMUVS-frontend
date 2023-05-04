@@ -534,7 +534,6 @@ const Home = () => {
                       </td>
                       <td>{collegeElectionQuantity.current}</td>
                     </tr>
-                    {console.log('some commits')}
                     <tr>
                       <td>
                         {isAdmin.current === 'true'
