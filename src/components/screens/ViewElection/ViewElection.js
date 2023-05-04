@@ -544,6 +544,8 @@ const ViewElection = () => {
                               disabled={
                                 votingStatus[i] === true
                                   ? true
+                                  : elections[i].electionStatus === 'Finished'
+                                  ? true
                                   : false || isAdmin.current === 'true'
                               }
                             >
