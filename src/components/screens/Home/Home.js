@@ -530,10 +530,11 @@ const Home = () => {
                       <td>
                         {isAdmin.current === 'true'
                           ? 'College Level Election'
-                          : `${sessionStorage.getItem('college')}`}
+                          : sessionStorage.getItem('college')}
                       </td>
                       <td>{collegeElectionQuantity.current}</td>
                     </tr>
+                    {console.log('some commits')}
                     <tr>
                       <td>
                         {isAdmin.current === 'true'
