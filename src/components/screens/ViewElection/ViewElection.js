@@ -277,7 +277,12 @@ const ViewElection = () => {
 
   const checkVote = (voteStatus, electionStatus, closingDate) => {
     try {
-      console.log(electionStatus);
+      console.log(
+        'Vote Status: ',
+        voteStatus,
+        ' Election Status: ',
+        electionStatus
+      );
       const rightNow = new Date().getTime();
       if (isAdmin.current === 'true') {
         return true;
