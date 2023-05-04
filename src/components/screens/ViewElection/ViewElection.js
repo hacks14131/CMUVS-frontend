@@ -277,25 +277,18 @@ const ViewElection = () => {
 
   const checkVote = (voteStatus, electionStatus, closingDate) => {
     try {
-      console.log(
-        'Vote Status: ',
-        voteStatus,
-        ' Election Status: ',
-        electionStatus
-      );
       const rightNow = new Date().getTime();
       if (isAdmin.current === 'true') {
         return true;
       } else {
         if (
-          voteStatus === false &&
-          electionStatus !== 'Finished' &&
+          voteStatus === true ||
+          electionStatus === 'Finished' ||
           rightNow >= closingDate.getTime()
         ) {
-          console.log('returning here!');
-          return false;
+          return true;
         }
-        return true;
+        return false;
       }
     } catch (error) {
       console.log(error);
