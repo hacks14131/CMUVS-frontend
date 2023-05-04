@@ -275,6 +275,26 @@ const ViewElection = () => {
     }
   };
 
+  const checkVote = (voteStatus, electionStatus, closingDate) => {
+    try {
+      const rightNow = new Date().getTime();
+      if (isAdmin.current === 'true') {
+        return true;
+      } else {
+        if (
+          voteStatus === false &&
+          electionStatus !== 'Finished' &&
+          rightNow >= closingDate.getTime()
+        ) {
+          return false;
+        }
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const checkElectionLiveStatus = (status, election) => {
     try {
       const rightNow = new Date().getTime();
@@ -542,11 +562,17 @@ const ViewElection = () => {
                                 vote(elections[i]);
                               }}
                               disabled={
-                                votingStatus[i] === true
-                                  ? true
-                                  : elections[i].electionStatus === 'Finished'
-                                  ? true
-                                  : false || isAdmin.current === 'true'
+                                checkVote(
+                                  votingStatus[i],
+                                  elections[i].electionStatus,
+                                  elections[i].electionClosingDate
+                                )
+                                // isAdmin === 'true' ? true : votingStatus[i] === true ? true : elections[i].electionStatus === 'Finished' ? true :
+                                // votingStatus[i] === true
+                                //   ? true
+                                //   : elections[i].electionStatus === 'Finished'
+                                //   ? true
+                                //   : false || isAdmin.current === 'true'
                               }
                             >
                               VOTE
