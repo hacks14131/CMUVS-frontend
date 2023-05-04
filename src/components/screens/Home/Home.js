@@ -530,7 +530,7 @@ const Home = () => {
                       <td>
                         {isAdmin.current === 'true'
                           ? 'College Level Election'
-                          : `College of ${sessionStorage.getItem('college')}`}
+                          : sessionStorage.getItem('college')}
                       </td>
                       <td>{collegeElectionQuantity.current}</td>
                     </tr>
