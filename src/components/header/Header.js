@@ -85,6 +85,11 @@ const Header = (props) => {
                       Election History
                     </NavDropdown.Item>
                   )}
+                  {isAdmin.current && (
+                    <NavDropdown.Item as={Link} to='/canvasser-list'>
+                      Canvasser List
+                    </NavDropdown.Item>
+                  )}
                 </NavDropdown>
               )}
             </Nav>

@@ -154,6 +154,33 @@ function ElectionHistory() {
     documentTitle: 'vote-logs',
   });
 
+  const getDateFormat = (opening, closing) => {
+    try {
+      const openingDate = new Date(opening);
+      const closingDate = new Date(closing);
+      const month = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ];
+      const openingMonth = month[openingDate.getMonth()];
+      const closingMonth = month[closingDate.getMonth()];
+      const structuredDate = `${openingMonth} ${openingDate.getDate()}, ${openingDate.getFullYear()} - ${closingMonth} ${closingDate.getDate()}, ${closingDate.getFullYear()}`;
+      return structuredDate;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {loading && <Loading />}
@@ -217,7 +244,7 @@ function ElectionHistory() {
                 <MDBRow>
                   <MDBCol size='12'>
                     <MDBTable responsive>
-                      <MDBTableHead dark>
+                      <MDBTableHead dark className='text-center'>
                         <tr>
                           <th>No.</th>
                           <th>ID</th>
@@ -229,7 +256,7 @@ function ElectionHistory() {
                         </tr>
                       </MDBTableHead>
                       {elections.length === 0 ? (
-                        <MDBTableBody>
+                        <MDBTableBody className='text-center'>
                           <tr>
                             <td colSpan={8} className='text-center mb-0'>
                               No Election Found
@@ -237,7 +264,7 @@ function ElectionHistory() {
                           </tr>
                         </MDBTableBody>
                       ) : (
-                        <MDBTableBody>
+                        <MDBTableBody className='text-center'>
                           {elections.map((election, index) => (
                             <tr
                               key={index}
@@ -253,14 +280,20 @@ function ElectionHistory() {
                               <th>{election.electionLevel}</th>
                               <th>{election.schoolYear}</th>
                               <th>
+                                {getDateFormat(
+                                  election.electionOpeningDate,
+                                  election.electionClosingDate
+                                )}
+                              </th>
+                              {/* <th>
                                 {new Date(
                                   election.electionOpeningDate
-                                ).toDateString()}{' '}
-                                -
-                                {new Date(
-                                  election.electionClosingDate
-                                ).toDateString()}
-                              </th>
+                                ).toDateString() +
+                                  ' - ' +
+                                  new Date(
+                                    election.electionClosingDate
+                                  ).toDateString()}
+                              </th> */}
                             </tr>
                           ))}
                         </MDBTableBody>

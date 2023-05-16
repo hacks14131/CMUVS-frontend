@@ -18,6 +18,7 @@ import ConcludeElection from './components/screens/ConcludeElection/ConcludeElec
 import Canvass from './components/screens/Canvass/Canvass';
 import PopulateUser from './components/screens/admin/PopulateUser/PopulateUser';
 import ChangePassword from './components/screens/password/ChangePassword';
+import CanvasserList from './components/screens/CanvasserList/CanvasserList';
 // import Logs from './components/screens/Logs/Logs';
 
 function App() {
@@ -37,6 +38,15 @@ function App() {
           element={
             <PrivateRoute>
               <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path='/canvasser-list'
+          element={
+            <PrivateRoute>
+              <CanvasserList />
             </PrivateRoute>
           }
         />

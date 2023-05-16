@@ -1,9 +1,17 @@
-.view {
-  min-height: 100vh;
+.page-container {
   position: relative;
-  background: #ececec;
+  min-height: 100vh;
+  background: #ececec !important;
   padding-bottom: 5em;
-  padding-top: 2em;
+  padding-top: 30px;
+}
+
+.titleDiv {
+  background-color: white;
+  margin-top: -5px;
+  margin-bottom: 40px;
+  border-bottom: 2px solid lightgray;
+  border-top: 2px solid lightgray;
 }
 
 .componentTitle {
@@ -16,33 +24,11 @@
   padding-bottom: 3px;
 }
 
-.titleDiv {
-  background-color: white;
-  margin-top: -5px;
-  margin-bottom: 40px;
-  border-bottom: 2px solid lightgray;
-  border-top: 2px solid lightgray;
-}
-
-.title {
-  margin-top: 20px;
-}
-
-.cardTitle {
-  color: white;
-}
-
-.button {
-  width: 100%;
-}
-
-.cardBody {
-  background: #2f4050;
-  border-top: 3px solid green;
-}
-
-.nearDeadline {
-  color: #58ab53 !important;
+.footerFix {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 5em;
+  margin-top: 30px;
 }
 
 .search {

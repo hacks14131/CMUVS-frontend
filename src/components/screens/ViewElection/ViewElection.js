@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../../Loading/Loading';
 import {
@@ -9,6 +8,7 @@ import {
   CardGroup,
   Col,
   Container,
+  Form,
   ListGroup,
   Modal,
   Row,
@@ -16,6 +16,8 @@ import {
 } from 'react-bootstrap';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import './ViewElection.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const ViewElection = () => {
   const location = useLocation();
@@ -23,13 +25,20 @@ const ViewElection = () => {
 
   const [loading, setLoading] = useState(true);
   const [elections, setElections] = useState([]);
+  const [resultElection, setResultElection] = useState([]);
+  const [resultElectionCopy, setResultElectionCopy] = useState([]);
+  // const [resultCanvassed, setResultCanvassed] = useState([]);
   const [canvassedElections, setCanvassedElections] = useState([]);
   const [votingStatus, setVotingStatus] = useState([]);
+  const [electionFilter, setElectionFilter] = useState([]);
+  const [electionSortFilter, setElectionSortFilter] = useState('');
   const [selectedCanvassedElection, setSelectedCanvassedElection] = useState({
     electionName: '',
     electionLevel: '',
     result: [],
   });
+  const [searchElection, setSearchElection] = useState('');
+  const [filterElection, setFilterElection] = useState(false);
   const [showCanvassedResultInformation, setShowCanvassedResultInformation] =
     useState(false);
   const isAdmin = useRef(sessionStorage.getItem('isAdmin'));
@@ -447,6 +456,84 @@ const ViewElection = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    try {
+      e.preventDefault();
+      if (searchElection !== '') {
+        const searchResult = elections.filter((election) =>
+          election.electionName
+            .toLowerCase()
+            .includes(searchElection.toLowerCase())
+        );
+        if (searchResult.length !== 0) {
+          setResultElection([...searchResult]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const applyFilter = () => {
+    try {
+      // initialize variable to be used
+      // check if a filter is added
+      // store elections that match the filter
+      // sort according to the applied sort order
+
+      let filteredEl = [];
+      let searchResultEl = [];
+
+      if (resultElectionCopy.length === 0) {
+        searchResultEl = [...elections];
+      } else {
+        searchResultEl = [...resultElectionCopy];
+      }
+
+      for (let i = 0; i < electionFilter.length; i++) {
+        const filterMatchElections = searchResultEl.filter(
+          (el) => el.electionLevel === electionFilter[i]
+        );
+        filteredEl = [...filteredEl, ...filterMatchElections];
+      }
+
+      if (electionFilter.length === 0) {
+        filteredEl = [...searchResultEl];
+      }
+
+      switch (electionSortFilter) {
+        case 'ASC':
+          filteredEl = filteredEl.sort((a, b) =>
+            a.electionName.toLowerCase() > b.electionName.toLowerCase() ? 1 : -1
+          );
+          break;
+        case 'DSC':
+          filteredEl = filteredEl.sort((a, b) =>
+            a.electionName.toLowerCase() > b.electionName.toLowerCase() ? -1 : 1
+          );
+          break;
+        case 'DCASC':
+          filteredEl = filteredEl.sort((a, b) =>
+            a.electionOpeningDate > b.electionOpeningDate ? -1 : 1
+          );
+          break;
+        case 'DCDSC':
+          filteredEl = filteredEl.sort((a, b) =>
+            a.electionOpeningDate > b.electionOpeningDate ? 1 : -1
+          );
+          break;
+        default:
+      }
+
+      setResultElection([...filteredEl]);
+      setFilterElection(false);
+      setElectionSortFilter('');
+      setElectionFilter([]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (location.state === null) {
     return <Navigate to='/home' />;
   } else {
@@ -457,6 +544,59 @@ const ViewElection = () => {
           <div className='view'>
             {elections.length !== 0 && (
               <div className='titleDiv'>
+                <Container className='title'>
+                  <header>
+                    <Form onSubmit={handleSearch} className='search'>
+                      <input
+                        className='searchInput'
+                        placeholder='Search Election ...'
+                        type='text'
+                        id='searchInput'
+                        onChange={(e) => {
+                          setSearchElection(e.target.value);
+                          if (e.target.value === '') {
+                            setResultElection([]);
+                          } else {
+                            const searchResult = elections.filter((election) =>
+                              election.electionName
+                                .toLowerCase()
+                                .includes(e.target.value.toLowerCase())
+                            );
+                            setResultElection([...searchResult]);
+                            setResultElectionCopy([...searchResult]);
+                          }
+                        }}
+                      />
+
+                      <button type='submit' className='searchButton'>
+                        <FontAwesomeIcon
+                          icon={faMagnifyingGlass}
+                          size='lg'
+                          style={{
+                            color: '#2f4050',
+                            cursor: 'pointer',
+                          }}
+                        />
+                      </button>
+                    </Form>
+                  </header>
+
+                  <Row>
+                    <FontAwesomeIcon
+                      icon={faFilter}
+                      size='lg'
+                      flip
+                      style={{
+                        color: '#2f4050',
+                        cursor: 'pointer',
+                        marginTop: '20px',
+                      }}
+                      onClick={() => {
+                        setFilterElection(true);
+                      }}
+                    />
+                  </Row>
+                </Container>
                 <h1 className='componentTitle'>
                   {`${
                     elections.length === 1
@@ -467,148 +607,262 @@ const ViewElection = () => {
               </div>
             )}
             <Container>
-              <Row xd={1} md={2} l={3} xl={3} className='g-5'>
-                {Array.from({ length: elections.length }).map((_, i) => (
-                  <Col key={elections[i]._id}>
-                    <CardGroup>
-                      <Card>
-                        <Card.Body
-                          className='cardBody'
-                          style={{ minHeight: '88px' }}
-                        >
-                          <Card.Title className='cardTitle text-center'>
-                            {elections[i].electionName}
-                          </Card.Title>
-                        </Card.Body>
-                        <ListGroup
-                          className='list-group-flush'
-                          style={{ minHeight: '270px' }}
-                        >
-                          <ListGroup.Item action>
-                            Election Status: {elections[i].electionStatus}
-                          </ListGroup.Item>
-                          <ListGroup.Item action>
-                            Election Level: {elections[i].electionLevel}
-                          </ListGroup.Item>
-                          <ListGroup.Item action>
-                            Election Scope: {elections[i].electionScope}
-                          </ListGroup.Item>
-                          <ListGroup.Item action>
-                            School Year: {elections[i].schoolYear}
-                          </ListGroup.Item>
-                          <ListGroup.Item
-                            action
-                            variant={checkElectionDeadline(
-                              elections[i],
-                              'listGroup'
-                            )}
-                            className='nearDeadline'
+              {resultElection.length !== 0 && (
+                <Row xd={1} md={2} l={3} xl={3} className='g-5'>
+                  {Array.from({ length: resultElection.length }).map((_, i) => (
+                    <Col key={resultElection[i]._id}>
+                      <CardGroup>
+                        <Card>
+                          <Card.Body
+                            className='cardBody'
+                            style={{ minHeight: '88px' }}
                           >
-                            Election Closing Date:{' '}
-                            {elections[i].electionClosingDate.toDateString()}
-                          </ListGroup.Item>
-                          <ListGroup.Item
-                            action
-                            variant={checkElectionDeadline(
-                              elections[i],
-                              'listGroup'
-                            )}
-                            className='nearDeadline'
+                            <Card.Title className='cardTitle text-center'>
+                              {resultElection[i].electionName}
+                            </Card.Title>
+                          </Card.Body>
+                          <ListGroup
+                            className='list-group-flush'
+                            style={{ minHeight: '270px' }}
                           >
-                            {/* {console.log(elections)} */}
-                            {`Time Left: ${
-                              elections[i].daysLeft > 0
-                                ? elections[i].daysLeft === 1
-                                  ? elections[i].daysLeft + ' day'
-                                  : elections[i].daysLeft + ' days'
-                                : ''
-                            }${elections[i].daysLeft > 0 ? ', ' : ''}${
-                              elections[i].hoursLeft > 0
-                                ? elections[i].hoursLeft === 1
-                                  ? elections[i].hoursLeft + ' hour'
-                                  : elections[i].hoursLeft + ' hours'
-                                : ''
-                            }${elections[i].hoursLeft > 0 ? ', ' : ''}${
-                              elections[i].minutesLeft > 0
-                                ? elections[i].minutesLeft === 1
-                                  ? elections[i].minutesLeft + ' minute'
-                                  : elections[i].minutesLeft + ' minutes'
-                                : ''
-                            }${
-                              elections[i].minutesLeft > 0 &&
-                              elections[i].secondsLeft > 0
-                                ? ', '
-                                : ''
-                            }${
-                              elections[i].secondsLeft > 0
-                                ? elections[i].secondsLeft === 1
-                                  ? elections[i].secondsLeft + ' second'
-                                  : elections[i].secondsLeft + ' seconds'
-                                : ''
-                            }`}
-                            {elections[i].daysLeft < 0 &&
-                            elections[i].hoursLeft < 0 &&
-                            elections[i].minutesLeft < 0 &&
-                            elections[i].secondsLeft < 0
-                              ? 'Election Closed'
-                              : ''}
-                          </ListGroup.Item>
-                        </ListGroup>
-                        <Card.Footer>
-                          <ButtonGroup className='button'>
-                            <Button
-                              variant='outline-primary'
-                              onClick={() => {
-                                vote(elections[i]);
-                              }}
-                              disabled={
-                                checkVote(
+                            <ListGroup.Item action>
+                              Election Status:{' '}
+                              {resultElection[i].electionStatus}
+                            </ListGroup.Item>
+                            <ListGroup.Item action>
+                              Election Level: {resultElection[i].electionLevel}
+                            </ListGroup.Item>
+                            <ListGroup.Item action>
+                              Election Scope: {resultElection[i].electionScope}
+                            </ListGroup.Item>
+                            <ListGroup.Item action>
+                              School Year: {resultElection[i].schoolYear}
+                            </ListGroup.Item>
+                            <ListGroup.Item
+                              action
+                              variant={checkElectionDeadline(
+                                resultElection[i],
+                                'listGroup'
+                              )}
+                              className='nearDeadline'
+                            >
+                              Election Closing Date:{' '}
+                              {resultElection[
+                                i
+                              ].electionClosingDate.toDateString()}
+                            </ListGroup.Item>
+                            <ListGroup.Item
+                              variant={checkElectionDeadline(
+                                resultElection[i],
+                                'listGroup'
+                              )}
+                              className='nearDeadline'
+                            >
+                              {`Election Closing Time: ${
+                                resultElection[
+                                  i
+                                ].electionClosingDate.getHours() % 12
+                              }:${
+                                resultElection[
+                                  i
+                                ].electionClosingDate.getMinutes() === 0
+                                  ? '00'
+                                  : resultElection[
+                                      i
+                                    ].electionClosingDate.getMinutes()
+                              } ${
+                                resultElection[
+                                  i
+                                ].electionClosingDate.getHours() > 11
+                                  ? 'pm'
+                                  : 'am'
+                              }`}
+                            </ListGroup.Item>
+                          </ListGroup>
+                          <Card.Footer>
+                            <ButtonGroup className='button'>
+                              <Button
+                                variant='outline-primary'
+                                onClick={() => {
+                                  vote(resultElection[i]);
+                                }}
+                                disabled={checkVote(
+                                  votingStatus[i],
+                                  resultElection[i].electionStatus,
+                                  resultElection[i].electionClosingDate
+                                )}
+                              >
+                                VOTE
+                              </Button>
+                              <Button
+                                variant='outline-info'
+                                disabled={disableResultButton(
+                                  resultElection[
+                                    i
+                                  ].electionClosingDate.getTime(),
+                                  resultElection[i].electionStatus
+                                )}
+                                onClick={() => {
+                                  viewResult(resultElection[i]);
+                                }}
+                              >
+                                RESULT
+                              </Button>
+                              <Button
+                                variant='outline-danger'
+                                disabled={checkElectionLiveStatus(
+                                  votingStatus[i],
+                                  resultElection[i]
+                                )}
+                                onClick={() => {
+                                  viewLive(resultElection[i]);
+                                }}
+                              >
+                                LIVE
+                              </Button>
+                            </ButtonGroup>
+                          </Card.Footer>
+                        </Card>
+                      </CardGroup>
+                    </Col>
+                  ))}
+                </Row>
+              )}
+              {resultElection.length === 0 && (
+                <Row xd={1} md={2} l={3} xl={3} className='g-5'>
+                  {Array.from({ length: elections.length }).map((_, i) => (
+                    <Col key={elections[i]._id}>
+                      <CardGroup>
+                        <Card>
+                          <Card.Body
+                            className='cardBody'
+                            style={{ minHeight: '88px' }}
+                          >
+                            <Card.Title className='cardTitle text-center'>
+                              {elections[i].electionName}
+                            </Card.Title>
+                          </Card.Body>
+                          <ListGroup
+                            className='list-group-flush'
+                            style={{ minHeight: '270px' }}
+                          >
+                            <ListGroup.Item action>
+                              Election Status: {elections[i].electionStatus}
+                            </ListGroup.Item>
+                            <ListGroup.Item action>
+                              Election Level: {elections[i].electionLevel}
+                            </ListGroup.Item>
+                            <ListGroup.Item action>
+                              Election Scope: {elections[i].electionScope}
+                            </ListGroup.Item>
+                            <ListGroup.Item action>
+                              School Year: {elections[i].schoolYear}
+                            </ListGroup.Item>
+                            <ListGroup.Item
+                              action
+                              variant={checkElectionDeadline(
+                                elections[i],
+                                'listGroup'
+                              )}
+                              className='nearDeadline'
+                            >
+                              Election Closing Date:{' '}
+                              {elections[i].electionClosingDate.toDateString()}
+                            </ListGroup.Item>
+                            <ListGroup.Item
+                              action
+                              variant={checkElectionDeadline(
+                                elections[i],
+                                'listGroup'
+                              )}
+                              className='nearDeadline'
+                            >
+                              {/* {console.log(elections)} */}
+                              {`Time Left: ${
+                                elections[i].daysLeft > 0
+                                  ? elections[i].daysLeft === 1
+                                    ? elections[i].daysLeft + ' day'
+                                    : elections[i].daysLeft + ' days'
+                                  : ''
+                              }${elections[i].daysLeft > 0 ? ', ' : ''}${
+                                elections[i].hoursLeft > 0
+                                  ? elections[i].hoursLeft === 1
+                                    ? elections[i].hoursLeft + ' hour'
+                                    : elections[i].hoursLeft + ' hours'
+                                  : ''
+                              }${elections[i].hoursLeft > 0 ? ', ' : ''}${
+                                elections[i].minutesLeft > 0
+                                  ? elections[i].minutesLeft === 1
+                                    ? elections[i].minutesLeft + ' minute'
+                                    : elections[i].minutesLeft + ' minutes'
+                                  : ''
+                              }${
+                                elections[i].minutesLeft > 0 &&
+                                elections[i].secondsLeft > 0
+                                  ? ', '
+                                  : ''
+                              }${
+                                elections[i].secondsLeft > 0
+                                  ? elections[i].secondsLeft === 1
+                                    ? elections[i].secondsLeft + ' second'
+                                    : elections[i].secondsLeft + ' seconds'
+                                  : ''
+                              }`}
+                              {elections[i].daysLeft < 0 &&
+                              elections[i].hoursLeft < 0 &&
+                              elections[i].minutesLeft < 0 &&
+                              elections[i].secondsLeft < 0
+                                ? 'Election Closed'
+                                : ''}
+                            </ListGroup.Item>
+                          </ListGroup>
+                          <Card.Footer>
+                            <ButtonGroup className='button'>
+                              <Button
+                                variant='outline-primary'
+                                onClick={() => {
+                                  vote(elections[i]);
+                                }}
+                                disabled={checkVote(
                                   votingStatus[i],
                                   elections[i].electionStatus,
                                   elections[i].electionClosingDate
-                                )
-                                // isAdmin === 'true' ? true : votingStatus[i] === true ? true : elections[i].electionStatus === 'Finished' ? true :
-                                // votingStatus[i] === true
-                                //   ? true
-                                //   : elections[i].electionStatus === 'Finished'
-                                //   ? true
-                                //   : false || isAdmin.current === 'true'
-                              }
-                            >
-                              VOTE
-                            </Button>
-                            <Button
-                              variant='outline-info'
-                              disabled={disableResultButton(
-                                elections[i].electionClosingDate.getTime(),
-                                elections[i].electionStatus
-                              )}
-                              onClick={() => {
-                                viewResult(elections[i]);
-                              }}
-                            >
-                              RESULT
-                            </Button>
-                            <Button
-                              variant='outline-danger'
-                              // disabled={votingStatus[i] === true ? false : true}
-                              disabled={checkElectionLiveStatus(
-                                votingStatus[i],
-                                elections[i]
-                              )}
-                              onClick={() => {
-                                viewLive(elections[i]);
-                              }}
-                            >
-                              LIVE
-                            </Button>
-                          </ButtonGroup>
-                        </Card.Footer>
-                      </Card>
-                    </CardGroup>
-                  </Col>
-                ))}
-              </Row>
+                                )}
+                              >
+                                VOTE
+                              </Button>
+                              <Button
+                                variant='outline-info'
+                                disabled={disableResultButton(
+                                  elections[i].electionClosingDate.getTime(),
+                                  elections[i].electionStatus
+                                )}
+                                onClick={() => {
+                                  viewResult(elections[i]);
+                                }}
+                              >
+                                RESULT
+                              </Button>
+                              <Button
+                                variant='outline-danger'
+                                disabled={checkElectionLiveStatus(
+                                  votingStatus[i],
+                                  elections[i]
+                                )}
+                                onClick={() => {
+                                  viewLive(elections[i]);
+                                }}
+                              >
+                                LIVE
+                              </Button>
+                            </ButtonGroup>
+                          </Card.Footer>
+                        </Card>
+                      </CardGroup>
+                    </Col>
+                  ))}
+                </Row>
+              )}
             </Container>
 
             {canvassedElections.length !== 0 && (
@@ -834,6 +1088,123 @@ const ViewElection = () => {
                   </span>
                 </Container>
               </Modal.Body>
+            </Modal>
+            <Modal
+              show={filterElection}
+              onHide={() => {
+                setFilterElection(false);
+                setElectionSortFilter('');
+                setElectionFilter([]);
+              }}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title className='ms-auto'>Filter Elections</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Container>
+                  <big>Select filter: </big>
+                  <Container>
+                    <Form.Check
+                      type='checkbox'
+                      id='UniversityLevel'
+                      label='University Level'
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          if (!electionFilter.includes('University')) {
+                            setElectionFilter((prevState) => [
+                              ...prevState,
+                              'University',
+                            ]);
+                          }
+                        } else {
+                          const electionFilterTemp = electionFilter.filter(
+                            (filter) => filter !== 'University'
+                          );
+                          setElectionFilter([...electionFilterTemp]);
+                        }
+                      }}
+                    />
+                  </Container>
+                  <Container>
+                    <Form.Check
+                      type='checkbox'
+                      id='CollegeLevel'
+                      label='College Level'
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          if (!electionFilter.includes('College')) {
+                            setElectionFilter((prevState) => [
+                              ...prevState,
+                              'College',
+                            ]);
+                          }
+                        } else {
+                          const electionFilterTemp = electionFilter.filter(
+                            (filter) => filter !== 'College'
+                          );
+                          setElectionFilter([...electionFilterTemp]);
+                        }
+                      }}
+                    />
+                  </Container>
+                  <Container>
+                    <Form.Check
+                      type='checkbox'
+                      id='DepartmentLevel'
+                      label='Department Level'
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          if (!electionFilter.includes('Department')) {
+                            setElectionFilter((prevState) => [
+                              ...prevState,
+                              'Department',
+                            ]);
+                          }
+                        } else {
+                          const electionFilterTemp = electionFilter.filter(
+                            (filter) => filter !== 'Department'
+                          );
+                          setElectionFilter([...electionFilterTemp]);
+                        }
+                      }}
+                    />
+                  </Container>
+                  <br />
+                  <big>Select sort order:</big>
+                  <Form.Control
+                    value={electionSortFilter}
+                    as='select'
+                    onChange={(e) => {
+                      setElectionSortFilter(e.target.value);
+                    }}
+                  >
+                    <option value={''}>--</option>
+                    <option value='ASC'>Name Ascending</option>
+                    <option value='DSC'>Name Descending</option>
+                    <option value='DCASC'>Date Ascending Order</option>
+                    <option value='DCDSC'>Date Descending Order</option>
+                  </Form.Control>
+                </Container>
+              </Modal.Body>
+              <Modal.Footer className='justify-content-center'>
+                <Button
+                  variant='info'
+                  onClick={() => {
+                    applyFilter();
+                  }}
+                >
+                  Apply Filter
+                </Button>
+                <Button
+                  variant='danger'
+                  onClick={() => {
+                    setResultElection([]);
+                    setFilterElection(false);
+                  }}
+                >
+                  Clear Filter
+                </Button>
+              </Modal.Footer>
             </Modal>
           </div>
         )}
