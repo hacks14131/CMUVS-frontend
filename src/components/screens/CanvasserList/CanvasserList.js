@@ -100,94 +100,96 @@ const CanvasserList = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className='page-container'>
-        <div className='titleDiv'>
-          <h1 className='componentTitle'>
-            Viewing of Election Canvassing Officer Page
-          </h1>
-        </div>
-        <Container className='footerFix'>
-          <MDBContainer
-            fluid
-            className='square border border-2 border-dark p-2'
-          >
-            <Container className='mt-1'>
-              <header>
-                <Form className='search'>
-                  <input
-                    className='searchInput'
-                    placeholder='Search Election ...'
-                    type='text'
-                    value={text}
-                    id='searchInput'
-                    onChange={(e) => {
-                      setText(e.target.value);
-                      if (e.target.value) {
-                        let searchResult = officerData.filter((data) =>
-                          data.election[0].electionID.electionName
-                            .toLowerCase()
-                            .includes(e.target.value.toLowerCase())
-                        );
-                        setOfficerData([...searchResult]);
-                        // console.log(searchResult);
-                      } else {
-                        setOfficerData([...officerDataClone]);
-                      }
-                    }}
-                  />
-
-                  <button className='searchButton'>
-                    <FontAwesomeIcon
-                      icon={faEraser}
-                      shake
-                      size='lg'
-                      style={{
-                        color: '#2f4050',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => {
-                        setOfficerData([...officerDataClone]);
-                        setText('');
+      {!loading && (
+        <div className='page-container'>
+          <div className='titleDiv'>
+            <h1 className='componentTitle'>
+              Viewing of Election Canvassing Officer Page
+            </h1>
+          </div>
+          <Container className='footerFix'>
+            <MDBContainer
+              fluid
+              className='square border border-2 border-dark p-2'
+            >
+              <Container className='mt-1'>
+                <header>
+                  <Form className='search'>
+                    <input
+                      className='searchInput'
+                      placeholder='Search Election ...'
+                      type='text'
+                      value={text}
+                      id='searchInput'
+                      onChange={(e) => {
+                        setText(e.target.value);
+                        if (e.target.value) {
+                          let searchResult = officerData.filter((data) =>
+                            data.election[0].electionID.electionName
+                              .toLowerCase()
+                              .includes(e.target.value.toLowerCase())
+                          );
+                          setOfficerData([...searchResult]);
+                          // console.log(searchResult);
+                        } else {
+                          setOfficerData([...officerDataClone]);
+                        }
                       }}
                     />
-                  </button>
-                </Form>
-              </header>
-              <MDBRow className='mt-2'>
-                <MDBCol size='12'>
-                  <MDBTable responsive>
-                    <MDBTableHead dark className='text-center'>
-                      <tr>
-                        <td>Election Name</td>
-                        <td>Canvassing Officer</td>
-                        <td>Election Level</td>
-                        <td>SY</td>
-                        <td>Date</td>
-                      </tr>
-                    </MDBTableHead>
-                    <MDBTableBody className='text-center'>
-                      {officerData.map((data) => (
-                        <tr key={data._id}>
-                          <th>{data.election[0].electionID.electionName}</th>
-                          <th>{`${data.userID.firstName} ${data.userID.familyName}`}</th>
-                          <th>{data.election[0].electionID.electionLevel}</th>
-                          <th>{data.election[0].electionID.schoolYear}</th>
-                          <th>
-                            {getDateFormat(
-                              data.election[0].electionID.electionOpeningDate,
-                              data.election[0].electionID.electionClosingDate
-                            )}
-                          </th>
+
+                    <button className='searchButton'>
+                      <FontAwesomeIcon
+                        icon={faEraser}
+                        shake
+                        size='lg'
+                        style={{
+                          color: '#2f4050',
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => {
+                          setOfficerData([...officerDataClone]);
+                          setText('');
+                        }}
+                      />
+                    </button>
+                  </Form>
+                </header>
+                <MDBRow className='mt-2'>
+                  <MDBCol size='12'>
+                    <MDBTable responsive>
+                      <MDBTableHead dark className='text-center'>
+                        <tr>
+                          <td>Election Name</td>
+                          <td>Canvassing Officer</td>
+                          <td>Election Level</td>
+                          <td>SY</td>
+                          <td>Date</td>
                         </tr>
-                      ))}
-                    </MDBTableBody>
-                  </MDBTable>
-                </MDBCol>
-              </MDBRow>
-            </Container>
-          </MDBContainer>
-        </Container>
-      </div>
+                      </MDBTableHead>
+                      <MDBTableBody className='text-center'>
+                        {officerData.map((data) => (
+                          <tr key={data._id}>
+                            <th>{data.election[0].electionID.electionName}</th>
+                            <th>{`${data.userID.firstName} ${data.userID.familyName}`}</th>
+                            <th>{data.election[0].electionID.electionLevel}</th>
+                            <th>{data.election[0].electionID.schoolYear}</th>
+                            <th>
+                              {getDateFormat(
+                                data.election[0].electionID.electionOpeningDate,
+                                data.election[0].electionID.electionClosingDate
+                              )}
+                            </th>
+                          </tr>
+                        ))}
+                      </MDBTableBody>
+                    </MDBTable>
+                  </MDBCol>
+                </MDBRow>
+              </Container>
+            </MDBContainer>
+          </Container>
+        </div>
+      )}
     </>
   );
 };

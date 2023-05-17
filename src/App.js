@@ -19,6 +19,7 @@ import Canvass from './components/screens/Canvass/Canvass';
 import PopulateUser from './components/screens/admin/PopulateUser/PopulateUser';
 import ChangePassword from './components/screens/password/ChangePassword';
 import CanvasserList from './components/screens/CanvasserList/CanvasserList';
+import CandidateProfile from './components/screens/CandidateProfile/CandidateProfile';
 // import Logs from './components/screens/Logs/Logs';
 
 function App() {
@@ -47,6 +48,15 @@ function App() {
           element={
             <PrivateRoute>
               <CanvasserList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path='/update-candidate=profile'
+          element={
+            <PrivateRoute>
+              <CandidateProfile />
             </PrivateRoute>
           }
         />

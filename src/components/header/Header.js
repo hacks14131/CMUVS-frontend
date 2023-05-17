@@ -90,6 +90,11 @@ const Header = (props) => {
                       Canvasser List
                     </NavDropdown.Item>
                   )}
+                  {isAdmin.current && (
+                    <NavDropdown.Item as={Link} to='/update-candidate=profile'>
+                      Manage Candidate Profile
+                    </NavDropdown.Item>
+                  )}
                 </NavDropdown>
               )}
             </Nav>

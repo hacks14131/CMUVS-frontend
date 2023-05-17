@@ -1,0 +1,80 @@
+.view {
+  min-height: 100vh;
+  position: relative;
+  background: #ececec;
+  padding-bottom: 5em;
+  padding-top: 2em;
+}
+
+.componentTitle {
+  text-align: center;
+  padding-bottom: 2.5rem;
+  font-weight: bold;
+  font-size: 35px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 3px;
+}
+
+.titleDiv {
+  background-color: white;
+  margin-top: -5px;
+  margin-bottom: 40px;
+  border-bottom: 2px solid lightgray;
+  border-top: 2px solid lightgray;
+}
+
+.footerFix {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 5em;
+  margin-top: 30px;
+}
+
+.search {
+  border: 2px solid #2f4050;
+  border-radius: 2em;
+  overflow: hidden;
+  font-size: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.searchButton,
+.searchInput {
+  background-color: #fff;
+  border: none;
+  outline: none;
+}
+
+.searchButton {
+  width: 15%;
+  font-size: 1.5rem;
+  padding-right: 0.5em;
+  color: gray;
+  display: grid;
+  place-content: center;
+}
+
+.searchInput {
+  padding: 1em;
+  width: 85%;
+}
+
+.search:focus-within {
+  box-shadow: 2px 2px 5px #2f4050;
+}
+
+.cardBody {
+  background: #2f4050;
+  border-top: 3px solid green;
+}
+
+.cardTitle {
+  color: white;
+}
+
+.note {
+  color: rgb(109, 109, 98) !important;
+  text-align: left;
+}
