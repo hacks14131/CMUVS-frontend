@@ -326,6 +326,7 @@ const Profile = () => {
                         type='file'
                         name='profilePic'
                         id='files'
+                        accept='image/png'
                         onChange={uploadFileHandler}
                       />
                     </Stack>

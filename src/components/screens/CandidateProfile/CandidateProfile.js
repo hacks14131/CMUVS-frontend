@@ -22,13 +22,13 @@ import axios from 'axios';
 const CandidateProfile = () => {
   const [loading, setLoading] = useState(true);
   const [election, setElection] = useState([]);
+  const [electionOriginalList, setElectionOriginalList] = useState([]);
   const [selectedElection, setSelectedElection] = useState(0);
   const [text, setText] = useState('');
   const [displayCandidates, setDisplayCandidates] = useState(false);
   const [editProfile, setEditProfile] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState({});
   const [candidate, setCandidate] = useState({ motto: '', platform: [''] });
-  // const [selectedFile, setSelectedFile] = useState(null);
   const [displayImage, setDisplayImage] = useState(null);
   const [image, setImage] = useState(null);
 
@@ -80,6 +80,7 @@ const CandidateProfile = () => {
           }
         }
         setElection([...filteredData]);
+        setElectionOriginalList([...filteredData]);
         setLoading(false);
       }
     );
@@ -193,8 +194,22 @@ const CandidateProfile = () => {
                       placeholder='Search Election ...'
                       type='text'
                       id='searchInput'
+                      value={text}
                       onChange={(e) => {
-                        console.log('typing');
+                        setText(e.target.value);
+                        if (e.target.value !== '') {
+                          let originalClone = electionOriginalList;
+                          let electionTemp = originalClone.filter((el) =>
+                            el.electionName
+                              .toLowerCase()
+                              .includes(e.target.value.toLowerCase())
+                          );
+                          if (electionTemp.length !== 0) {
+                            setElection([...electionTemp]);
+                          } else {
+                            setElection([...originalClone]);
+                          }
+                        }
                       }}
                     />
 
@@ -208,7 +223,8 @@ const CandidateProfile = () => {
                           cursor: 'pointer',
                         }}
                         onClick={() => {
-                          console.log('clicked');
+                          setElection([...electionOriginalList]);
+                          setText('');
                         }}
                       />
                     </button>

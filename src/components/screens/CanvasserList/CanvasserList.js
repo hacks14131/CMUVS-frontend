@@ -124,7 +124,7 @@ const CanvasserList = () => {
                       onChange={(e) => {
                         setText(e.target.value);
                         if (e.target.value) {
-                          let searchResult = officerData.filter((data) =>
+                          let searchResult = officerDataClone.filter((data) =>
                             data.election[0].electionID.electionName
                               .toLowerCase()
                               .includes(e.target.value.toLowerCase())
